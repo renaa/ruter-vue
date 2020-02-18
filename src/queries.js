@@ -24,3 +24,16 @@ export const getStopPlace = gql`
     }
   }
 `;
+
+export const getTrips = gql`
+  query stopPlace($query: String!) 
+  {
+    stopPlace(query: $query) {
+      id,
+      name {
+        value
+      }
+    }
+  }
+`;
+
