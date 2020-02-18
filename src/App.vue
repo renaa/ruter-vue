@@ -1,16 +1,16 @@
 <template>
   <div id="app">
-    <x />
+    <getStopPlace />
   </div>
 </template>
 
 <script>
-import x from './components/x.vue'
+import getStopPlace from './components/getStopPlace.vue'
 
 export default {
   name: 'App',
   components: {
-    x
+    getStopPlace
   }
 }
 </script>

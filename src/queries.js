@@ -1,7 +1,9 @@
 import { gql } from "apollo-boost";
 
-export const GET_FROGNS = gql`
-  query topographicPlace($query: String!){
+//🚧🚧🚧🚧🚧
+export const getTopographicPlace = gql`
+  query topographicPlace($query: String!)
+  {
     topographicPlace(query: $query) {
       id
       name {
@@ -11,3 +13,14 @@ export const GET_FROGNS = gql`
   }
 `;
 
+export const getStopPlace = gql`
+  query stopPlace($query: String!) 
+  {
+    stopPlace(query: $query) {
+      id,
+      name {
+        value
+      }
+    }
+  }
+`;
