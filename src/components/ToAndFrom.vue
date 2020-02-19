@@ -1,7 +1,7 @@
 <template>
   <div class="toAndFrom">
-    <stop-place msg="Fra" v-on:select-place="g(fromId =  $event)"/>
-    <stop-place msg="Til" v-on:select-place="g(toId = $event)"/>
+    <stop-place msg="Fra" v-on:select-place="fromId =  $event"/>
+    <stop-place msg="Til" v-on:select-place="toId = $event"/>
     <div v-if="fromId && toId">
       🚌🚌🚌
     </div>

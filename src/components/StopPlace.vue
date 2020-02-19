@@ -8,11 +8,10 @@
         <span v-else-if="error">An error occured</span>
         <section v-if="data">
           <ul v-if="data.stopPlace.length">
-            <li
-              v-on:click="$emit('select-place', place.id)"
+            <li v-for="place in data.stopPlace"
+              @click="$emit('select-place', place.id);"
               class="place"
               :key="place.id"
-              v-for="place in data.stopPlace"
             >
               {{ place.name.value }}
               <br />
@@ -35,9 +34,11 @@ export default {
   data() {
     return {
       query: getStopPlace,
-      input: "frogn"
+      input: "frogn",
+      current: null,
     };
   },
+  
 };
 </script>
 
@@ -57,7 +58,9 @@ li {
   margin: 5px auto;
   display: block;
 }
-
+.current {
+  background-color: red;
+}
 input {
   padding: 5px;
   margin: 5px 0;

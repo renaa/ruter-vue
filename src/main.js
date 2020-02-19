@@ -7,6 +7,11 @@ const client = new ApolloClient({
   uri: "https://api.entur.io/stop-places/v1/graphql"
 });
 
+
+import VueRouter from 'vue-router'
+Vue.use(VueRouter)
+
+
 const apolloProvider = new VueApollo({
   defaultClient: client
 });
