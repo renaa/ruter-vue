@@ -29,10 +29,9 @@ yarn run lint
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 
-### 👩‍💻
-https://medium.com/yld-blog/using-vue-with-apollo-65e2b1297592
+### 👩‍💻 https://medium.com/yld-blog/using-vue-with-apollo-65e2b1297592
 
-https://developer.entur.org/
+### 🙏 https://thecodingmachine.io/adding-graphql-to-your-vuejs-application
 
-https://api.entur.io/journey-planner/v2/ide/
+### 🍇 https://developer.entur.org/
 

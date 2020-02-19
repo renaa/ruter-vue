@@ -2,13 +2,10 @@
   <div class="stopPlace">
     <span>{{ msg }}</span>
     <input type="text" v-model="input" />
-    <ApolloQuery :query="query" :variables="{ query: input }">
-      <template slot-scope="{ result: { loading, error, data } }">
-        <span v-if="loading">Loading...</span>
-        <span v-else-if="error">An error occured</span>
-        <section v-if="data">
-          <ul v-if="data.stopPlace.length">
-            <li v-for="place in data.stopPlace"
+        <button v-on:click="loadPlaces()">sok</button>
+        <section v-if="resultData">
+          <ul v-if="resultData.stopPlace.length">
+            <li v-for="place in resultData.stopPlace"
               @click="$emit('select-place', place.id);"
               class="place"
               :key="place.id"
@@ -19,8 +16,8 @@
           </ul>
           <div v-else>no results</div>
         </section>
-      </template>
-    </ApolloQuery>
+      
+    
   </div>
 </template>
 
@@ -36,8 +33,22 @@ export default {
       query: getStopPlace,
       input: "frogn",
       current: null,
+      resultData: null
     };
   },
+  methods: {
+    loadPlaces(){
+      this.$apollo.query({
+                    query: getStopPlace,
+                    variables: {
+                        query: this.input
+                    }
+                })
+                .then(response => {
+                    this.resultData = response.data;
+                });
+    }
+  }
   
 };
 </script>
