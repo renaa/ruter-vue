@@ -3,8 +3,14 @@ import App from './App.vue'
 
 import ApolloClient from "apollo-boost";
 import VueApollo from "vue-apollo";
-const client = new ApolloClient({
+
+
+const clientStopPlace = new ApolloClient({
   uri: "https://api.entur.io/stop-places/v1/graphql"
+});
+
+export const clientJourneyPlanner = new ApolloClient({
+  uri: "https://api.entur.io/journey-planner/v2/graphql"
 });
 
 
@@ -13,7 +19,11 @@ Vue.use(VueRouter)
 
 
 const apolloProvider = new VueApollo({
-  defaultClient: client
+  clients: {
+    clientStopPlace,
+    clientJourneyPlanner
+  },
+  defaultClient: clientStopPlace
 });
 
 Vue.use(VueApollo);

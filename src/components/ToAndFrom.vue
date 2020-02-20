@@ -3,18 +3,20 @@
     <stop-place msg="Fra" v-on:select-place="fromId =  $event"/>
     <stop-place msg="Til" v-on:select-place="toId = $event"/>
     <div v-if="fromId && toId">
-      🚌🚌🚌
+      <trip :fid="fromId" :tid="toId" :now="getNowDate()"/>
     </div>
   </div>
 </template>
 
 <script>
 import StopPlace from "./StopPlace";
+import Trip from "./Trip";
 
 export default {
   name: "getToAndFrom",
   components: {
-    StopPlace
+    StopPlace,
+    Trip
   },
   data() {
     return {
@@ -22,6 +24,12 @@ export default {
       toId: null,
     }
   },
+  methods: {
+    getNowDate(){
+      let x = new Date();
+      return x.toISOString();
+    }
+  }
 };
 </script>
 
