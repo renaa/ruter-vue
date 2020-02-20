@@ -9,7 +9,7 @@ const clientStopPlace = new ApolloClient({
   uri: "https://api.entur.io/stop-places/v1/graphql"
 });
 
-export const clientJourneyPlanner = new ApolloClient({
+const clientJourneyPlanner = new ApolloClient({
   uri: "https://api.entur.io/journey-planner/v2/graphql"
 });
 

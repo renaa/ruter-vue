@@ -9,7 +9,7 @@
 
 <script>
 import {  getTrip } from "../queries.js";
-import clientJourneyPlanner from "../main.js"
+
 
 export default {
   props: [
@@ -18,20 +18,21 @@ export default {
     'now'
     ],
   name: 'Trip',
-  apollo: {
-    
-  },
+
   data() {
     return {
       input: getTrip,
       resultData: null
     }
   },
+  apollo: {
+    $client: 'clientJourneyPlanner'
+  },
   created: function() {
       console.log(this.$apollo)
       this.$apollo.query({
                     query: getTrip,
-                    client: clientJourneyPlanner
+                    
                 })
                 .then(response => {
                     this.resultData = response.data;
