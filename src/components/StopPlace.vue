@@ -1,34 +1,32 @@
 <template>
   <div class="stopPlace">
     <span>{{ msg }}</span>
-    <input type="text" v-model="input" />
-        <button v-on:click="loadPlaces()">sok</button>
-        <section v-if="resultData">
-          <ul v-if="resultData.stopPlace.length">
-            <li v-for="(place, i) in resultData.stopPlace"
-              @click="
-                $emit('select-place', place.id);
-                current = i;
-                
-              "
-              class="place"
-              :class="{current:i == current} "
-              :key="place.id"
-            >
-              {{ place.name.value }}
-              <br />
-            </li>
-          </ul>
-          <div v-else>no results</div>
-        </section>
-      
-    
+    <input v-on:keyup="loadPlaces()" v-model="input" />
+    <section v-if="resultData">
+      <ul v-if="resultData.stopPlace.length">
+        <li
+          v-for="(place, i) in resultData.stopPlace"
+          @click="
+            $emit('select-place', place.id);
+            current = i;
+          "
+          class="place"
+          :class="{ current: i == current }"
+          :key="place.id"
+        >
+          <abbr :title="place.topographicPlace.name.value">{{
+            place.name.value
+          }}</abbr>
+          <br />
+        </li>
+      </ul>
+      <div v-else>no results</div>
+    </section>
   </div>
 </template>
 
-
 <script>
-import { getStopPlace } from "../queries.js";
+import { StopPlace } from "../queries/StopPlace.gql";
 
 export default {
   props: ["msg"],
@@ -41,26 +39,23 @@ export default {
     };
   },
   methods: {
-    loadPlaces(){
-      this.$apollo.query({
-                    query: getStopPlace,
-                    variables: {
-                        query: this.input
-                    }
-                })
-                .then(response => {
-                    this.resultData = response.data;
-                });
+    loadPlaces() {
+      this.$apollo
+        .query({
+          query: StopPlace,
+          variables: {
+            query: this.input
+          }
+        })
+        .then(response => {
+          this.resultData = response.data;
+        });
     }
   }
-  
 };
 </script>
 
 <style scoped>
-.stopPlace {
-  margin: 50px 0;
-}
 ul {
   list-style-type: none;
   padding: 5px;
@@ -82,6 +77,13 @@ button {
 }
 span {
   margin-right: 10px;
+}
+abbr {
+  text-decoration: none;
+}
+
+.stopPlace {
+  margin: 50px 0;
 }
 .place {
   background-color: #42b983;

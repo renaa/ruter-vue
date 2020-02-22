@@ -1,0 +1,38 @@
+query trip($from: Location! $to: Location! $dateTime: DateTime){
+    trip(
+      from: $from
+      to: $to
+      dateTime: $dateTime
+      numTripPatterns: 10
+      minimumTransferTime: 180
+      walkSpeed: 1.3
+    ) {
+      tripPatterns {
+        startTime
+        endTime
+        duration
+        walkDistance
+        legs {
+
+          aimedStartTime
+          expectedStartTime
+          
+          fromPlace {
+            name
+            quay{
+              publicCode
+            }
+          }
+          toPlace {
+            name
+          }
+          mode
+          distance
+          line {
+            id
+            publicCode
+          }
+        }
+      }
+    }
+  }

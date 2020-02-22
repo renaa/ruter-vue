@@ -4,7 +4,8 @@ module.exports = {
     module: {
       rules: [
         {
-          test: /\.graphql$/,
+          test: /\.(graphql|gql)$/,
+          exclude: /node_modules/,
           use: 'graphql-tag/loader'
         }
       ]

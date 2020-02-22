@@ -1,9 +1,8 @@
-import Vue from 'vue'
-import App from './App.vue'
+import Vue from "vue";
+import App from "./App.vue";
 
 import ApolloClient from "apollo-boost";
 import VueApollo from "vue-apollo";
-
 
 const clientStopPlace = new ApolloClient({
   uri: "https://api.entur.io/stop-places/v1/graphql"
@@ -13,10 +12,8 @@ const clientJourneyPlanner = new ApolloClient({
   uri: "https://api.entur.io/journey-planner/v2/graphql"
 });
 
-
-import VueRouter from 'vue-router'
-Vue.use(VueRouter)
-
+import VueRouter from "vue-router";
+Vue.use(VueRouter);
 
 const apolloProvider = new VueApollo({
   clients: {
@@ -28,9 +25,10 @@ const apolloProvider = new VueApollo({
 
 Vue.use(VueApollo);
 
-Vue.config.productionTip = false
+//Vue.prototype.$log = console.log.bind(console)
+Vue.config.productionTip = false;
 
 new Vue({
   render: h => h(App),
- apolloProvider,
-}).$mount('#app')
+  apolloProvider
+}).$mount("#app");

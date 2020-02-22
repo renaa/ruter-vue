@@ -1,0 +1,13 @@
+query StopPlace($query: String!) {
+    stopPlace(query: $query) {
+      id
+      name {
+        value
+      }
+      topographicPlace{
+      name {
+        value
+      }
+    }
+  }
+}

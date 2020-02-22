@@ -1,9 +1,10 @@
 <template>
   <div class="toAndFrom">
-    <stop-place msg="Fra" v-on:select-place="fromId =  $event"/>
-    <stop-place msg="Til" v-on:select-place="toId = $event"/>
+    Reiseplanlegger
+    <stop-place msg="Fra" v-on:select-place="fromId = $event" />
+    <stop-place msg="Til" v-on:select-place="toId = $event" />
     <div v-if="fromId && toId">
-      <trip :fid="fromId" :tid="toId" :now="getNowDate()"/>
+      <trip :fid="fromId" :tid="toId" :now="getNowDate()" />
     </div>
   </div>
 </template>
@@ -21,14 +22,15 @@ export default {
   data() {
     return {
       fromId: null,
-      toId: null,
-    }
+      toId: null
+    };
   },
   methods: {
-    getNowDate(){
+    getNowDate() {
       let x = new Date();
       return x.toISOString();
-    }
+    },
+    Search() {}
   }
 };
 </script>
