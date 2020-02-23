@@ -3,9 +3,31 @@
     <span>{{ msg }}</span>
     <input v-on:keyup="loadPlaces()" v-model="input" />
     <button @click="getLocation()">getLocation()</button>
-    <div class="a">{{geo}}</div>
+
+    <!-- Leroy Yenkins -->
+    <div style="height: 500px;">
+      <div class="info" style="height: 15%">
+        <span>Center: {{ center }}</span>
+        <span>Zoom: {{ zoom }}</span>
+        <span>Bounds: {{ bounds }}</span>
+        <div class="a">{{ markerLatLng }}</div>
+      </div>
+      <l-map
+        style="height: 100%; width: 100%"
+        :zoom="zoom"
+        :center="center"
+        @click="setMarker"
+        @update:zoom="zoomUpdated"
+        @update:center="centerUpdated"
+        @update:bounds="boundsUpdated"
+      >
+        <l-tile-layer :url="url"></l-tile-layer>
+        <l-marker :lat-lng="markerLatLng" ></l-marker>
+      </l-map>
+    </div>
+
     <section>
-      <ul id="11" v-if=" stopData && stopData.stopPlace.length">
+      <ul id="11" v-if="stopData && stopData.stopPlace.length">
         <li
           v-for="(place, i) in stopData.stopPlace"
           :key="place.id"
@@ -25,25 +47,43 @@
       <div v-else>no result :(</div>
     </section>
 
-      test
+    
   </div>
 </template>
 
 <script>
 import { StopPlace } from "../queries/StopPlace.gql";
+import { LMap, LTileLayer, LMarker } from "vue2-leaflet";
 
 export default {
   props: ["msg", "inputQuery"],
   name: "getToAndFrom",
   data() {
     return {
+      //leaf
+      url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+      zoom: 7,
+      center: [59.87, 10.66],
+      bounds: null,
+
       input: "",
       current: null,
       stopData: null,
       geo: "",
+      markerLatLng: [59.87, 10.66],
+      
     };
   },
+  components: {
+    LMap,
+    LTileLayer,
+    LMarker
+  },
   methods: {
+    
+    setMarker(event) {
+      this.markerLatLng = event.latlng;
+    },
     haveResults() {
       return this.stopData && this.stopData.stopPlace;
     },
@@ -63,18 +103,26 @@ export default {
           this.stopData = response.data;
         });
     },
-    
     getLocation() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition((position) => {
-      this.geo = position.coords.latitude + '|' + position.coords.longitude;
-    });
-  }
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(position => {
+          this.geo = position.coords.latitude + "|" + position.coords.longitude;
+        });
+      }
     },
     showPosition(position) {
-      console.log(position)
-    
-}
+      console.log(position);
+    },
+
+    zoomUpdated(zoom) {
+      this.zoom = zoom;
+    },
+    centerUpdated(center) {
+      this.center = center;
+    },
+    boundsUpdated(bounds) {
+      this.bounds = bounds;
+    }
   },
   created() {
     this.input = this.inputQuery;
@@ -105,12 +153,12 @@ abbr {
 }
 
 .a {
-  position: absolute;
+  
   top: 0;
   right: 0;
 }
 .stopPlaces {
-  position: relative;
+  /* position: relative; */
   margin: 50px 0;
 }
 .place {
@@ -122,5 +170,8 @@ abbr {
 
 .current {
   background-color: #35495e;
+}
+.lmap {
+  height: 1000vh;
 }
 </style>
