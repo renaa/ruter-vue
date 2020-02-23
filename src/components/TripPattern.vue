@@ -2,68 +2,63 @@
   <div class="trip-pattern">
     <!-- @mouseenter="$log" -->
 
-<!-- todo lat long to use in foot legs! 🤣 -->
+    <!-- todo lat long to use in foot legs! 🤣 -->
     <div class="leg">
-      <div v-for="(leg, i) in tripPattern.legs" :key="i" class="leg-container">
-        <span v-if="leg.mode == 'foot'">
-          <!-- {{leg.fromPlace.name}} >  -->
-          <!-- {{getTime(leg.aimedStartTime)}} -->
+      <div v-for="(leg, i) in tripPattern.legs" :key="i" class="grid-container">
+        <div v-if="leg.mode == 'foot'" class="grid-item">
           {{ getTime(leg.expectedStartTime) }}
-
-          🐾{{ Math.round(leg.distance) }}m > {{ leg.toPlace.name }}
-        </span>
-        <span v-else-if="leg.mode == 'bus'">
-          <!-- {{leg.fromPlace.name}} >  -->
-          <!-- {{getTime(leg.aimedStartTime)}} -->
+          🐾
+          {{ Math.round(leg.distance) }}m ➡
+          {{ leg.toPlace.name }}
+        </div>
+        <div v-else-if="leg.mode == 'bus'">
           {{ getTime(leg.expectedStartTime) }}
-          {{leg.fromPlace.quay.publicCode}}
-          🚌 {{ leg.line.publicCode }} > {{ leg.toPlace.name }}
-        </span>
-        <span v-else-if="leg.mode == 'rail'">
-          <!-- {{leg.fromPlace.name}} -->
-          <!-- {{getTime(leg.aimedStartTime)}} -->
+          {{ leg.fromPlace.quay.publicCode }}
+          🚌
+          {{ leg.line.publicCode }}
+          ➡
+          {{ leg.toPlace.name }}
+        </div>
+        <div v-else-if="leg.mode == 'rail'">
           {{ getTime(leg.expectedStartTime) }}
-        {{leg.fromPlace.quay.publicCode}}
-          🚅
-          {{ leg.line.publicCode }} > {{ leg.toPlace.name }}
-        </span>
-        <span v-else-if="leg.mode == 'tram'">
-          <!-- {{leg.fromPlace.name}} -->
-          <!-- {{getTime(leg.aimedStartTime)}} -->
+          {{ leg.fromPlace.quay.publicCode }}
+          🚅 {{ leg.line.publicCode }}
+          ➡
+          {{ leg.toPlace.name }}
+        </div>
+        <div v-else-if="leg.mode == 'tram'">
           {{ getTime(leg.expectedStartTime) }}
-        {{leg.fromPlace.quay.publicCode}}
+          {{ leg.fromPlace.quay.publicCode }}
+          🚋
+          {{ leg.line.publicCode }}
+          ➡
+          {{ leg.toPlace.name }}
+        </div>
 
-          🚋{{ leg.line.publicCode }} > {{ leg.toPlace.name }}
-        </span>
-
-        <span v-else-if="leg.mode == 'metro'">
-          <!-- {{leg.fromPlace.name}} >  -->
-          <!-- {{getTime(leg.aimedStartTime)}} -->
+        <div v-else-if="leg.mode == 'metro'">
           {{ getTime(leg.expectedStartTime) }}
-        {{leg.fromPlace.quay.publicCode}}
+          {{ leg.fromPlace.quay.publicCode }}
+          🚇
+          {{ leg.line.publicCode }}
+          ➡
+          {{ leg.toPlace.name }}
+        </div>
 
-          🚇 {{ leg.line.publicCode }} > {{ leg.toPlace.name }}
-        </span>
-
-        <span v-else>
-          <!-- {{leg.fromPlace.name}} -->
-          <!-- {{getTime(leg.aimedStartTime)}} -->
+        <div v-else>
           {{ getTime(leg.expectedStartTime) }}
-        {{leg.fromPlace.quay.publicCode}}
-
-          {{ leg.mode }} {{leg.line.publicCode}}
-          > {{ leg.toPlace.name }}
-        </span>
-        <br />
+          {{ leg.fromPlace.quay.publicCode }}
+          {{ leg.mode }}
+          {{ leg.line.publicCode }}
+          ➡
+          {{ leg.toPlace.name }}
+        </div>
       </div>
-      <span>
-
-------------   
-</span>
-<br>
-      <span>
+      <div>
+        ------------
+      </div>
+      <div>
         {{ getTime(tripPattern.endTime) }}
-      </span>
+      </div>
     </div>
     <!-- <ul v-if="tripPattern.legs.length">
       <li v-for="(leg, i) in tripPattern.legs" :key="i" ></li>
@@ -90,36 +85,20 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 5px;
-  display: flex;
-  flex-wrap: wrap;
-  padding: 5px;
-  margin: 5px;
-}
-li {
-  margin: 5px auto;
-  display: block;
-}
-a {
-  color: #42b983;
-}
-input {
-  padding: 5px;
-  margin: 5px 0;
-  /* border-radius: 5px; */
-}
-.trip-pattern {
+.leg {
   background-color: #42b983;
   color: white;
   padding: 5px;
   border-radius: 5px;
-}
-.leg {
   text-align: left;
 }
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+
+}
+.grid-item {
+  border:1px solid black;
+}
+
 </style>

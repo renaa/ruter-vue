@@ -29,11 +29,11 @@
 import { StopPlace } from "../queries/StopPlace.gql";
 
 export default {
-  props: ["msg"],
+  props: ["msg", "inputQuery"],
   name: "getToAndFrom",
   data() {
     return {
-      input: "frogn",
+      input: "",
       current: null,
       resultData: null
     };
@@ -51,6 +51,10 @@ export default {
           this.resultData = response.data;
         });
     }
+  },
+  created() {
+    this.input = this.inputQuery
+    this.loadPlaces()
   }
 };
 </script>
@@ -71,12 +75,6 @@ li {
 input {
   padding: 5px;
   margin: 5px 0;
-}
-button {
-  margin: 5px;
-}
-span {
-  margin-right: 10px;
 }
 abbr {
   text-decoration: none;

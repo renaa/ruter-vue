@@ -72,9 +72,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
+
 ul {
   list-style-type: none;
   padding: 5px;
@@ -87,21 +85,6 @@ li {
   margin: 5px auto;
   display: block;
 }
-a {
-  color: #42b983;
-}
-input {
-  padding: 5px;
-  margin: 5px 0;
-  /* border-radius: 5px; */
-}
-.place {
-  background-color: #42b983;
-  color: white;
-  padding: 5px;
-  border-radius: 5px;
-}
-.leg {
-  text-align: left;
-}
+
+
 </style>

@@ -1,8 +1,8 @@
 <template>
   <div class="toAndFrom">
     Reiseplanlegger
-    <stop-place msg="Fra" v-on:select-place="fromId = $event" />
-    <stop-place msg="Til" v-on:select-place="toId = $event" />
+    <stop-place msg="Fra" inputQuery="teisen" v-on:select-place="fromId = $event" />
+    <stop-place msg="Til" inputQuery="Frognerseteren" v-on:select-place="toId = $event" />
     <div v-if="fromId && toId">
       <trip :fid="fromId" :tid="toId" :now="getNowDate()" />
     </div>
