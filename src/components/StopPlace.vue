@@ -2,6 +2,8 @@
   <div class="stopPlaces">
     <span>{{ msg }}</span>
     <input v-on:keyup="loadPlaces()" v-model="input" />
+    <button @click="getLocation()">getLocation()</button>
+    <div class="a">{{geo}}</div>
     <section>
       <ul id="11" v-if=" stopData && stopData.stopPlace.length">
         <li
@@ -23,10 +25,7 @@
       <div v-else>no result :(</div>
     </section>
 
-    <button @click="test()">
       test
-      </button>
-    <div class="a">{{geo}}</div>
   </div>
 </template>
 
@@ -64,8 +63,18 @@ export default {
           this.stopData = response.data;
         });
     },
-    test() {},
     
+    getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition((position) => {
+      this.geo = position.coords.latitude + '|' + position.coords.longitude;
+    });
+  }
+    },
+    showPosition(position) {
+      console.log(position)
+    
+}
   },
   created() {
     this.input = this.inputQuery;
