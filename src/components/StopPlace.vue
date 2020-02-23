@@ -1,18 +1,18 @@
 <template>
-  <div class="stopPlace">
+  <div class="stopPlaces">
     <span>{{ msg }}</span>
     <input v-on:keyup="loadPlaces()" v-model="input" />
-    <section v-if="resultData">
-      <ul v-if="resultData.stopPlace.length">
+    <section >
+      <ul id="11" v-if="stopData.stopPlace.length">
         <li
-          v-for="(place, i) in resultData.stopPlace"
+          v-for="(place, i) in stopData.stopPlace"
+          :key="place.id"
           @click="
             $emit('select-place', place.id);
             current = i;
           "
           class="place"
           :class="{ current: i == current }"
-          :key="place.id"
         >
           <abbr :title="place.topographicPlace.name.value">{{
             place.name.value
@@ -20,8 +20,11 @@
           <br />
         </li>
       </ul>
-      <div v-else>no results</div>
+      <div v-else>no result :(</div>
     </section>
+
+    
+    
   </div>
 </template>
 
@@ -35,12 +38,21 @@ export default {
     return {
       input: "",
       current: null,
-      resultData: null
+      stopData: null,
     };
   },
   methods: {
+    haveResults() {
+      return (
+        (this.stopData && this.stopData.stopPlace) 
+        
+      );
+    },
     loadPlaces() {
       this.current = null;
+      this.loadStopPlaces();
+    },
+    loadStopPlaces() {
       this.$apollo
         .query({
           query: StopPlace,
@@ -49,13 +61,14 @@ export default {
           }
         })
         .then(response => {
-          this.resultData = response.data;
+          this.stopData = response.data;
         });
-    }
+    },
+    
   },
   created() {
-    this.input = this.inputQuery
-    this.loadPlaces()
+    this.input = this.inputQuery;
+    this.loadPlaces();
   }
 };
 </script>
@@ -81,7 +94,7 @@ abbr {
   text-decoration: none;
 }
 
-.stopPlace {
+.stopPlaces {
   margin: 50px 0;
 }
 .place {
@@ -90,6 +103,7 @@ abbr {
   padding: 5px;
   border-radius: 5px;
 }
+
 .current {
   background-color: #35495e;
 }

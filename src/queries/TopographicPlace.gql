@@ -1,0 +1,16 @@
+query TopographicPlace($query: String!) {
+  topographicPlace(query: $query) {
+    id
+    name {
+      value
+    }
+    parentTopographicPlace {
+      name {
+        value
+      }
+    }
+    polygon {
+      coordinates
+    }
+  }
+}
