@@ -2,8 +2,8 @@
   <div class="stopPlaces">
     <span>{{ msg }}</span>
     <input v-on:keyup="loadPlaces()" v-model="input" />
-    <section >
-      <ul id="11" v-if="stopData.stopPlace.length">
+    <section>
+      <ul id="11" v-if=" stopData && stopData.stopPlace.length">
         <li
           v-for="(place, i) in stopData.stopPlace"
           :key="place.id"
@@ -23,8 +23,10 @@
       <div v-else>no result :(</div>
     </section>
 
-    
-    
+    <button @click="test()">
+      test
+      </button>
+    <div class="a">{{geo}}</div>
   </div>
 </template>
 
@@ -39,14 +41,12 @@ export default {
       input: "",
       current: null,
       stopData: null,
+      geo: "",
     };
   },
   methods: {
     haveResults() {
-      return (
-        (this.stopData && this.stopData.stopPlace) 
-        
-      );
+      return this.stopData && this.stopData.stopPlace;
     },
     loadPlaces() {
       this.current = null;
@@ -64,6 +64,7 @@ export default {
           this.stopData = response.data;
         });
     },
+    test() {},
     
   },
   created() {
@@ -94,7 +95,13 @@ abbr {
   text-decoration: none;
 }
 
+.a {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
 .stopPlaces {
+  position: relative;
   margin: 50px 0;
 }
 .place {

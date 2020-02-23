@@ -59,6 +59,15 @@
           <div class="grid-item">➡️</div>
           <div class="grid-item">{{ leg.toPlace.name }}</div> 
         </div>
+        <div v-else-if="leg.mode == 'water'" class="grid-container">
+          <div class="grid-item">{{ getTime(leg.expectedStartTime) }}</div>
+          <div class="grid-item">
+            <abbr title="Platform">{{ leg.fromPlace.quay.publicCode }}</abbr></div>
+          <div class="grid-item">🚢</div>
+          <div class="grid-item">{{ leg.line.publicCode }}</div>
+          <div class="grid-item">➡️</div>
+          <div class="grid-item">{{ leg.toPlace.name }}</div> 
+        </div>
         <div v-else-if="leg.mode == 'air'" class="grid-container">
           <div class="grid-item">{{ getTime(leg.expectedStartTime) }}</div>
           <div class="grid-item">
@@ -81,7 +90,8 @@
       </div>
      
       <div class="summary">
-        {{ getTime(tripPattern.startTime) }} ➡️ {{ getTime(tripPattern.endTime) }}
+        <!-- {{ getTime(tripPattern.startTime) }} ➡️ {{ getTime(tripPattern.endTime) }} -->
+        {{ getTime(tripPattern.endTime) }}
       </div>
     </div>
     <!-- <ul v-if="tripPattern.legs.length">
@@ -122,7 +132,7 @@ abbr{
 }
 .grid-container {
   display: grid;
-  grid-template-columns: 65px 15px 25px 50px 22px auto;
+  grid-template-columns: 55px 20px 25px 50px 22px auto;
   grid-gap: 3px;
 }
 .grid-item {
