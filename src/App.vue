@@ -1,16 +1,16 @@
 <template>
   <div id="app">
-    <to-and-from />
+    <travel-planner />
   </div>
 </template>
 
 <script>
-import ToAndFrom from "./components/ToAndFrom.vue";
+import TravelPlanner from "./components/TravelPlanner";
 
 export default {
   name: "App",
   components: {
-    ToAndFrom
+    TravelPlanner
   }
 };
 </script>

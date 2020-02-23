@@ -1,26 +1,28 @@
 <template>
   <div class="toAndFrom">
     Reiseplanlegger
-    <stop-place msg="Fra" inputQuery="teisen" v-on:select-place="fromId = $event" />
-    <stop-place msg="Til" inputQuery="Frognerseteren" v-on:select-place="toId = $event" />
+    <stop-place msg="Fra" :inputQuery="fromInput" v-on:select-place="fromId = $event" />
+    <stop-place msg="Til" :inputQuery="toInput" v-on:select-place="toId = $event" />
     <div v-if="fromId && toId">
-      <trip :fid="fromId" :tid="toId" :now="getNowDate()" />
+      <trips :fid="fromId" :tid="toId" :now="getNowDate()" />
     </div>
   </div>
 </template>
 
 <script>
 import StopPlace from "./StopPlace";
-import Trip from "./Trip";
+import Trips from "./Trips";
 
 export default {
   name: "getToAndFrom",
   components: {
     StopPlace,
-    Trip
+    Trips
   },
   data() {
     return {
+      fromInput: "teisen",
+      toInput: "frogner",
       fromId: null,
       toId: null
     };

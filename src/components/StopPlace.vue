@@ -40,6 +40,7 @@ export default {
   },
   methods: {
     loadPlaces() {
+      this.current = null;
       this.$apollo
         .query({
           query: StopPlace,

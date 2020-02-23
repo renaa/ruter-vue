@@ -4,6 +4,7 @@
 
     Fra: {{ fid }} Til: {{ tid }} Kl: {{ getTime(now) }}
     <button @click="Search()">Finn tur</button>
+    
     <section v-if="resultData">
       <ul v-if="resultData.trip">
         <li
@@ -28,7 +29,7 @@ import TripPattern from "./TripPattern";
 
 export default {
   props: ["fid", "tid", "now"],
-  name: "Trip",
+  name: "Trips",
   components: {
     TripPattern
   },
@@ -72,7 +73,12 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+button {
+  background-color: #42b983;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+}
 ul {
   list-style-type: none;
   padding: 5px;

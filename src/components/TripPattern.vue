@@ -8,7 +8,7 @@
         <div v-if="leg.mode == 'foot'" class="grid-container">
           <div class="grid-item time">{{ getTime(leg.expectedStartTime) }}</div>
           <div class="grid-item">
-            <abbr title="Platform">{{ leg.fromPlace.quay.publicCode }}</abbr></div>
+            <abbr title="Platform"> </abbr></div>
           <div class="grid-item">🐾</div>
           <div class="grid-item">{{ Math.round(leg.distance) }}m</div>
           <div class="grid-item">➡️</div>
@@ -129,7 +129,7 @@ abbr{
   text-align: left;
 }
 .summary{
-  text-align: center;
+  text-align: left;
 }
 
 </style>
