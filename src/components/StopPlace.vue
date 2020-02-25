@@ -2,18 +2,17 @@
   <div class="stopPlaces">
     <span>{{ msg }}</span>
     <input v-on:keyup="loadPlaces()" v-model="input" />
-    <button @click="getLocation()">getLocation()</button>
-
+    <button @click="getLocation()">📍</button>
+    <button @click="hidemap = !hidemap">toggleMap</button>
     <!-- Leroy Yenkins -->
-    <div style="height: 500px;">
+    <div v-if="!hidemap" style="height: 500px;">
       <div class="info" style="height: 15%">
         <span>Center: {{ center }}</span>
         <span>Zoom: {{ zoom }}</span>
         <span>Bounds: {{ bounds }}</span>
         <div class="a">{{ markerLatLng }}</div>
       </div>
-      <l-map
-        style="height: 100%; width: 100%"
+      <l-map style="height: 85%"
         :zoom="zoom"
         :center="center"
         @click="setMarker"
@@ -72,6 +71,7 @@ export default {
       geo: "",
       markerLatLng: [59.87, 10.66],
       
+      hidemap: true,
     };
   },
   components: {
@@ -80,7 +80,7 @@ export default {
     LMarker
   },
   methods: {
-    
+
     setMarker(event) {
       this.markerLatLng = event.latlng;
     },
@@ -152,11 +152,7 @@ abbr {
   text-decoration: none;
 }
 
-.a {
-  
-  top: 0;
-  right: 0;
-}
+
 .stopPlaces {
   /* position: relative; */
   margin: 50px 0;
@@ -173,5 +169,6 @@ abbr {
 }
 .lmap {
   height: 1000vh;
+  display: block;
 }
 </style>
