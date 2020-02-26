@@ -58,9 +58,15 @@ export default {
         });
     }
   },
+  computed: {},
   created: function() {
     this.Search();
-  }
+  },
+  watch: {
+    fid: function(newFid){
+      console.log( newFid)
+    },
+  },
 };
 </script>
 
