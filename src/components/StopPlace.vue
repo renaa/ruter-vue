@@ -22,7 +22,9 @@
         @update:bounds="boundsUpdated"
       >
         <l-tile-layer :url="url"></l-tile-layer>
-        <l-marker :lat-lng="markerLatLng" ></l-marker>
+        <l-marker :lat-lng="markerLatLng" :icon="icon" ></l-marker>
+
+        
       </l-map>
     </div>
 
@@ -53,7 +55,7 @@
 
 <script>
 import { StopPlace } from "../queries/StopPlace.gql";
-import { LMap, LTileLayer, LMarker } from "vue2-leaflet";
+import { LMap, LTileLayer, LMarker, L } from "vue2-leaflet";
 
 export default {
   props: ["msg", "inputQuery"],
@@ -71,8 +73,14 @@ export default {
       stopData: null,
       geo: "",
       markerLatLng: [59.87, 10.66],
-      
       hidemap: true,
+      url2: "http://www.newdesignfile.com/postpic/2013/01/transparent-map-marker-clip-art_281326.png",
+      icon:L.icon({
+    iconUrl: this.url2,
+    iconSize: [40, 40],
+    iconAnchor: [20, 20]
+  })
+
     };
   },
   components: {

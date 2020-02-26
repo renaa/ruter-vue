@@ -2,8 +2,7 @@
   <div class="hello">
     <!-- @mouseenter="$log" -->
     Fra: {{ fid }} Til: {{ tid }} Kl: {{ getTime(now) }}
-    <button @click="Search()">Finn tur</button>
-
+    
     <section v-if="resultData">
       <ul v-if="resultData && resultData.trip">
         <li v-for="(tripPattern, i) in resultData.trip.tripPatterns" class="trip" :key="i">
@@ -58,14 +57,12 @@ export default {
         });
     }
   },
-  computed: {},
   created: function() {
     this.Search();
   },
   watch: {
-    fid: function(newFid){
-      console.log( newFid)
-    },
+    fid: function(){this.Search();},
+    tid: function(){this.Search();},
   },
 };
 </script>
