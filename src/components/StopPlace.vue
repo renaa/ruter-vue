@@ -23,7 +23,7 @@
         @update:bounds="boundsUpdated"
       >
         <l-tile-layer :url="url"></l-tile-layer>
-        <!-- <l-marker :lat-lng="markerLatLng" :icon="icon"></l-marker> -->
+        <l-marker :lat-lng="markerLatLng" :icon="icon"></l-marker>
       </l-map>
     </div>
 
@@ -53,7 +53,7 @@
 <script>
 import { StopPlace } from "../queries/StopPlace.gql";
 import { LMap, LTileLayer } from "vue2-leaflet";
-
+import L from 'leaflet'
 export default {
   props: ["msg", "inputQuery"],
   name: "getToAndFrom",
@@ -72,11 +72,11 @@ export default {
       markerLatLng: [59.87, 10.66],
       hidemap: true,
 
-      // icon: L.icon({
-      //   iconUrl: "http://www.newdesignfile.com/postpic/2013/01/transparent-map-marker-clip-art_281326.png",
-      //   iconSize: [40, 40],
-      //   iconAnchor: [20, 20]
-      // })
+      icon: L.icon({
+        iconUrl: "http://www.newdesignfile.com/postpic/2013/01/transparent-map-marker-clip-art_281326.png",
+        iconSize: [40, 40],
+        iconAnchor: [20, 20]
+      })
 
     };
   },
