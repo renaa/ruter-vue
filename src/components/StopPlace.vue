@@ -74,8 +74,8 @@ export default {
 
       icon: L.icon({
         iconUrl: "http://www.newdesignfile.com/postpic/2013/01/transparent-map-marker-clip-art_281326.png",
-        iconSize: [40, 40],
-        iconAnchor: [20, 20]
+        iconSize: [18, 30],
+        iconAnchor: [9 , 30]
       })
 
     };
