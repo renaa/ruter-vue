@@ -1,6 +1,6 @@
 <template>
   <div class="stopPlaces">
-      test
+    test
     <span>{{ msg }}</span>
     <input v-on:keyup="loadPlaces()" v-model="input" />
     <button @click="getLocation()">📍</button>
@@ -13,18 +13,17 @@
         <span>Bounds: {{ bounds }}</span>
         <div class="a">{{ markerLatLng }}</div>
       </div>
-      <l-map style="height: 85%"
+      <l-map
+        style="height: 85%"
         :zoom="zoom"
         :center="center"
-        @click="setMarker; $emit('map-place', markerLatLng);"
+        @click="setMarker"
         @update:zoom="zoomUpdated"
         @update:center="centerUpdated"
         @update:bounds="boundsUpdated"
       >
         <l-tile-layer :url="url"></l-tile-layer>
-        <l-marker :lat-lng="markerLatLng" :icon="icon" ></l-marker>
-
-        
+        <!-- <l-marker :lat-lng="markerLatLng" :icon="icon"></l-marker> -->
       </l-map>
     </div>
 
@@ -48,14 +47,12 @@
       </ul>
       <div v-else>no result :(</div>
     </section>
-
-    
   </div>
 </template>
 
 <script>
 import { StopPlace } from "../queries/StopPlace.gql";
-import { LMap, LTileLayer, LMarker, L } from "vue2-leaflet";
+import { LMap, LTileLayer } from "vue2-leaflet";
 
 export default {
   props: ["msg", "inputQuery"],
@@ -74,24 +71,25 @@ export default {
       geo: "",
       markerLatLng: [59.87, 10.66],
       hidemap: true,
-      url2: "http://www.newdesignfile.com/postpic/2013/01/transparent-map-marker-clip-art_281326.png",
-      icon:L.icon({
-    iconUrl: this.url2,
-    iconSize: [40, 40],
-    iconAnchor: [20, 20]
-  })
+
+      // icon: L.icon({
+      //   iconUrl: "http://www.newdesignfile.com/postpic/2013/01/transparent-map-marker-clip-art_281326.png",
+      //   iconSize: [40, 40],
+      //   iconAnchor: [20, 20]
+      // })
 
     };
   },
   components: {
     LMap,
     LTileLayer,
-    LMarker
+    
   },
   methods: {
-    
     setMarker(event) {
       this.markerLatLng = event.latlng;
+      this.$emit('map-place', this.markerLatLng);
+      
     },
     haveResults() {
       return this.stopData && this.stopData.stopPlace;
@@ -160,7 +158,6 @@ input {
 abbr {
   text-decoration: none;
 }
-
 
 .stopPlaces {
   /* position: relative; */
