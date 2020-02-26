@@ -1,5 +1,6 @@
 <template>
   <div class="stopPlaces">
+      test
     <span>{{ msg }}</span>
     <input v-on:keyup="loadPlaces()" v-model="input" />
     <button @click="getLocation()">📍</button>
@@ -15,7 +16,7 @@
       <l-map style="height: 85%"
         :zoom="zoom"
         :center="center"
-        @click="setMarker"
+        @click="setMarker; $emit('map-place', markerLatLng);"
         @update:zoom="zoomUpdated"
         @update:center="centerUpdated"
         @update:bounds="boundsUpdated"
@@ -80,7 +81,7 @@ export default {
     LMarker
   },
   methods: {
-
+    
     setMarker(event) {
       this.markerLatLng = event.latlng;
     },

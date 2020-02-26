@@ -1,25 +1,18 @@
 <template>
   <div class="hello">
     <!-- @mouseenter="$log" -->
-
     Fra: {{ fid }} Til: {{ tid }} Kl: {{ getTime(now) }}
     <button @click="Search()">Finn tur</button>
-    
+
     <section v-if="resultData">
-      <ul v-if="resultData.trip">
-        <li
-          v-for="(tripPattern, i) in resultData.trip.tripPatterns"
-          class="trip"
-          :key="i"
-        >
+      <ul v-if="resultData && resultData.trip">
+        <li v-for="(tripPattern, i) in resultData.trip.tripPatterns" class="trip" :key="i">
           <trip-pattern :tripPattern="tripPattern" />
         </li>
       </ul>
       <div v-else>no results</div>
     </section>
-    <section v-else-if="querying">
-      loading
-    </section>
+    <section v-else-if="querying">loading</section>
   </div>
 </template>
 
@@ -28,8 +21,8 @@ import { trip } from "../queries/Trip.gql";
 import TripPattern from "./TripPattern";
 
 export default {
-  props: ["fid", "tid", "now"],
   name: "Trips",
+  props: ["fid", "tid", "now"],
   components: {
     TripPattern
   },
@@ -44,12 +37,12 @@ export default {
   },
   methods: {
     getTime(iso) {
-      return iso.substring(11, 19);
+      return iso.substring(11, 19); //HH:MM:SS
     },
     Search() {
-      console.log(this.now);
       this.querying = true;
-      this.resulData = null;
+      this.resultData = null;
+
       this.$apollo
         .query({
           query: trip,
@@ -91,6 +84,4 @@ li {
   margin: 5px auto;
   display: block;
 }
-
-
 </style>
