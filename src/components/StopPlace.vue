@@ -1,5 +1,5 @@
 <template>
-  <div class="stopPlaces">
+  <div class="StopPlaces">
     <span>{{ msg }} </span>
     <input v-on:keyup="loadPlaces()" v-model="input" />
     <button @click="getLocation()">📍</button>
@@ -17,7 +17,6 @@
         <l-marker :lat-lng="markerLatLng" :icon="icon"></l-marker>
       </l-map>
     </div>
-
     <section> 
       <ul v-if="stopData && stopData.stopPlace.length">
         <li
@@ -45,23 +44,26 @@
 import { StopPlace } from "../queries/StopPlace.gql";
 import { LMap, LTileLayer } from "vue2-leaflet";
 import L from "leaflet";
+
 export default {
   props: ["msg", "inputQuery"],
   name: "getToAndFrom",
   data() {
     return {
-      //leaf
-      url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-      zoom: 7,
-      center: [59.87, 10.66],
-      bounds: null,
-
+      
       input: "",
       current: null,
       stopData: null,
-      markerLatLng: [59.87, 10.66],
-      hidemap: true,
 
+      //leaf
+      hidemap: true,
+      url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+      zoom: 10,
+      bounds: null,
+      center: [59.87, 10.66],
+
+      // leaf marker
+      markerLatLng: [59.87, 10.66],
       icon: L.icon({
         iconUrl:
           "http://www.newdesignfile.com/postpic/2013/01/transparent-map-marker-clip-art_281326.png",
@@ -76,12 +78,18 @@ export default {
   },
   methods: {
     setMarker(event) {
+      this.current = null;
       this.markerLatLng = event.latlng;
       this.$emit("map-place", this.markerLatLng);
-      console.log(this.markerLatLng)
     },
-    haveResults() {
-      return this.stopData && this.stopData.stopPlace;
+    getLocation() {
+      if (navigator.geolocation) {
+        this.current = null;
+        navigator.geolocation.getCurrentPosition(position => {
+          let geo = { "lat": position.coords.latitude, "lng": position.coords.longitude }
+          this.$emit('select-place', geo);
+        });
+      }
     },
     loadPlaces() {
       this.current = null;
@@ -99,19 +107,6 @@ export default {
           this.stopData = response.data;
         });
     },
-    getLocation() {
-      if (navigator.geolocation) {
-        this.current = null;
-        navigator.geolocation.getCurrentPosition(position => {
-          let geo = { "lat": position.coords.latitude, "lng": position.coords.longitude }
-          this.$emit('select-place', geo);
-        });
-      }
-    },
-    showPosition(position) {
-      console.log(position);
-    },
-
     zoomUpdated(zoom) {
       this.zoom = zoom;
     },
@@ -160,7 +155,6 @@ abbr {
   padding: 5px;
   border-radius: 5px;
 }
-
 .current {
   background-color: #35495e;
 }
@@ -168,7 +162,7 @@ abbr {
   height: 1000vh;
   display: block;
 }
-.stopPlaces {
+.StopPlaces {
   width: 50%;
 }
 </style>

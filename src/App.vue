@@ -18,7 +18,6 @@ export default {
 <style>
 @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
 
-
 #app {
   font-family: 'Roboto Condensed', sans-serif;
   -webkit-font-smoothing: antialiased;

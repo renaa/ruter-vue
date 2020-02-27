@@ -1,5 +1,5 @@
 <template>
-  <div class="trip-pattern">
+  <div class="TripPattern">
     <!-- todo lat long to use in foot legs! 🤣 -->
     <div class="leg">
       <div v-for="(leg, i) in tripPattern.legs" :key="i" class=" ">

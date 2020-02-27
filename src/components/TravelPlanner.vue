@@ -65,12 +65,6 @@ input {
   padding: 5px;
   margin: 5px 0;
 }
-.place {
-  background-color: #42b983;
-  color: white;
-  padding: 5px;
-  border-radius: 5px;
-}
 .label {
   width: 100%;
 }
