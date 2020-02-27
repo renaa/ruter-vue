@@ -1,17 +1,21 @@
 <template>
   <div class="hello">
     <!-- @mouseenter="$log" -->
-    Fra: {{ fid }} Til: {{ tid }} Kl: {{ getTime(now) }}
-    
+    <!-- Fra: {{ fid }} Til: {{ tid }} Kl: {{ getTime(now) }} -->
+
     <section v-if="resultData">
       <ul v-if="resultData && resultData.trip">
-        <li v-for="(tripPattern, i) in resultData.trip.tripPatterns" class="trip" :key="i">
+        <li
+          v-for="(tripPattern, i) in resultData.trip.tripPatterns"
+          class="trip"
+          :key="i"
+        >
           <trip-pattern :tripPattern="tripPattern" />
         </li>
       </ul>
       <div v-else>no results</div>
     </section>
-    <section v-else-if="querying">loading</section>
+    <section v-else>loading</section>
   </div>
 </template>
 
@@ -28,42 +32,76 @@ export default {
   data() {
     return {
       resultData: null,
-      querying: false
+      querying: false,
+      fromQuery: null,
+      toQuery: null
     };
   },
   apollo: {
     $client: "clientJourneyPlanner"
   },
   methods: {
-    getTime(iso) {
-      return iso.substring(11, 19); //HH:MM:SS
-    },
     Search() {
       this.querying = true;
       this.resultData = null;
-
+      this.CreateQuery();
+      this.SearchWithQuery();
+      this.querying = false;
+    },
+    CreateQuery(){
+      console.log(typeof this.fid)
+      if (typeof this.fid == "string"){
+        this.fromQuery = { place: this.fid }
+      }
+      else if(typeof this.fid == "object"){
+        this.fromQuery = {
+          "coordinates" : {
+            "latitude": this.fid.lat,
+            "longitude": this.fid.lng
+          }
+        }
+      }
+      if (typeof this.tid == "string"){
+        this.toQuery = { place: this.tid }
+      }
+      else if(typeof this.tid == "object"){
+        this.toQuery = {
+          "coordinates" : {
+            "latitude": this.tid.lat,
+            "longitude": this.tid.lng
+          }
+        }
+      }
+    },
+    SearchWithQuery() {
       this.$apollo
         .query({
           query: trip,
           variables: {
-            from: { place: this.fid },
-            to: { place: this.tid },
+            from: this.fromQuery,
+            to: this.toQuery,
             nowDate: this.now.toString()
           }
         })
         .then(response => {
           this.resultData = response.data;
-          this.querying = false;
         });
+    },
+    getTime(iso) {
+      return iso.substring(11, 19); //HH:MM:SS
     }
   },
   created: function() {
     this.Search();
   },
   watch: {
-    fid: function(){this.Search();},
-    tid: function(){this.Search();},
-  },
+    fid: function() {
+      this.Search();
+    },
+    tid: function() {
+      this.Search();
+    }
+  }
 };
 </script>
 

@@ -1,20 +1,11 @@
 <template>
   <div class="stopPlaces">
-    test
-    <span>{{ msg }}</span>
+    <span>{{ msg }} </span>
     <input v-on:keyup="loadPlaces()" v-model="input" />
     <button @click="getLocation()">📍</button>
     <button @click="hidemap = !hidemap">toggleMap</button>
-    <!-- Leroy Yenkins -->
     <div v-if="!hidemap" style="height: 500px;">
-      <div class="info" style="height: 15%">
-        <span>Center: {{ center }}</span>
-        <span>Zoom: {{ zoom }}</span>
-        <span>Bounds: {{ bounds }}</span>
-        <div class="a">{{ markerLatLng }}</div>
-      </div>
       <l-map
-        style="height: 85%"
         :zoom="zoom"
         :center="center"
         @click="setMarker"
@@ -27,8 +18,8 @@
       </l-map>
     </div>
 
-    <section>
-      <ul id="11" v-if="stopData && stopData.stopPlace.length">
+    <section> 
+      <ul v-if="stopData && stopData.stopPlace.length">
         <li
           v-for="(place, i) in stopData.stopPlace"
           :key="place.id"
@@ -45,7 +36,7 @@
           <br />
         </li>
       </ul>
-      <div v-else>no result :(</div>
+      <div v-else>no result from stop place query</div>
     </section>
   </div>
 </template>
@@ -53,7 +44,7 @@
 <script>
 import { StopPlace } from "../queries/StopPlace.gql";
 import { LMap, LTileLayer } from "vue2-leaflet";
-import L from 'leaflet'
+import L from "leaflet";
 export default {
   props: ["msg", "inputQuery"],
   name: "getToAndFrom",
@@ -73,23 +64,21 @@ export default {
       hidemap: true,
 
       icon: L.icon({
-        iconUrl: "http://www.newdesignfile.com/postpic/2013/01/transparent-map-marker-clip-art_281326.png",
+        iconUrl:
+          "http://www.newdesignfile.com/postpic/2013/01/transparent-map-marker-clip-art_281326.png",
         iconSize: [18, 30],
-        iconAnchor: [9 , 30]
+        iconAnchor: [9, 30]
       })
-
     };
   },
   components: {
     LMap,
-    LTileLayer,
-    
+    LTileLayer
   },
   methods: {
     setMarker(event) {
       this.markerLatLng = event.latlng;
-      this.$emit('map-place', this.markerLatLng);
-      
+      this.$emit("map-place", this.markerLatLng);
     },
     haveResults() {
       return this.stopData && this.stopData.stopPlace;
@@ -176,5 +165,8 @@ abbr {
 .lmap {
   height: 1000vh;
   display: block;
+}
+.stopPlaces {
+  width: 50%;
 }
 </style>

@@ -1,8 +1,20 @@
 <template>
-  <div class="toAndFrom">
-    Reiseplanlegger
-    <stop-place msg="Fra" :inputQuery="fromInput" v-on:select-place="fromId = $event"  v-on:map-place="fromId = $event" />
-    <stop-place msg="Til" :inputQuery="toInput" v-on:select-place="toId = $event"  v-on:map-place="fromId = $event"/>
+  <div class="TravelPlanner">
+    <div class="label">Reiseplanlegger</div>
+    <div class="stopPlaceContainer">
+      <stop-place
+        msg="Fra"
+        :inputQuery="fromInput"
+        v-on:select-place="fromId = $event"
+        v-on:map-place="fromId = $event"
+      />
+      <stop-place
+        msg="Til"
+        :inputQuery="toInput"
+        v-on:select-place="toId = $event"
+        v-on:map-place="toId = $event"
+      />
+    </div>
     <div v-if="fromId && toId">
       <trips :fid="fromId" :tid="toId" :now="getNowDate()" />
     </div>
@@ -59,5 +71,12 @@ input {
   color: white;
   padding: 5px;
   border-radius: 5px;
+}
+.label {
+  width: 100%;
+}
+.stopPlaceContainer {
+  display: flex;
+  flex-direction: row;
 }
 </style>

@@ -9,6 +9,9 @@ module.exports = {
           use: 'graphql-tag/loader'
         }
       ]
+    },
+    devServer: {
+      headers: { "Access-Control-Allow-Origin": "*" }
     }
   },
   
