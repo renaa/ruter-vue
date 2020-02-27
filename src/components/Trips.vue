@@ -1,7 +1,7 @@
 <template>
   <div class="Trips">
     <section v-if="resultData">
-      <ul v-if="resultData && resultData.trip">
+      <ul v-if="resultData && resultData.trip && resultData.trip.tripPatterns.length">
         <li
           v-for="(tripPattern, i) in resultData.trip.tripPatterns"
           class="trip"
@@ -10,9 +10,9 @@
           <trip :tripPattern="tripPattern" />
         </li>
       </ul>
-      <div v-else>no results</div>
+      <div v-else>entur returned nothing</div>
     </section>
-    <section v-else>loading</section>
+    <section v-else>loading...</section>
   </div>
 </template>
 
