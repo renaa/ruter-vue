@@ -36,3 +36,30 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 ### 🍇 https://developer.entur.org/
 
 ### 🗺️ https://vue2-leaflet.netlify.com/ 
+
+TODO:
+
+UX
+* remove pointer when pressing a stopplace
+* ? showing only map or stopplaces
+* close map when selecting a place
+* removing inputString when togglingMap on, BUT this makes another query. ?
+
+Features
+* remember state
+* TrueTime (SIRI)
+* BySykkel (get availiability)
+* press on trip to get a detailed view
+  * other layout : time - leg - time - leg 
+  * show particular leg on map  @click
+    * new query
+
+* dabble with weighted queries / and with possible parameters in query
+* controlpanel
+  * set walking speed
+    * variable walking speed ?
+  * set favorites
+    * easy access in StopPlace
+* avoid certain transport modes
+* 
+  
