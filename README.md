@@ -35,5 +35,4 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ### 🍇 https://developer.entur.org/
 
-### https://vue2-leaflet.netlify.com/ 🗺️
-### https://jsfiddle.net/Boumi/z3bmc1ex/1/ 📌
+### 🗺️ https://vue2-leaflet.netlify.com/ 
