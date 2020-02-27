@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div class="Trips">
     <section v-if="resultData">
       <ul v-if="resultData && resultData.trip">
         <li
@@ -7,7 +7,7 @@
           class="trip"
           :key="i"
         >
-          <trip-pattern :tripPattern="tripPattern" />
+          <trip :tripPattern="tripPattern" />
         </li>
       </ul>
       <div v-else>no results</div>
@@ -18,13 +18,13 @@
 
 <script language="ts">
 import { trip } from "../queries/Trip.gql";
-import TripPattern from "./TripPattern";
+import Trip from "./Trip";
 
 export default {
   name: "Trips",
   props: ["fid", "tid", "now"],
   components: {
-    TripPattern
+    Trip
   },
   data() {
     return {
