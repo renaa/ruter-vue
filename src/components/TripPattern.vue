@@ -1,7 +1,5 @@
 <template>
   <div class="trip-pattern">
-    <!-- @mouseenter="$log" -->
-
     <!-- todo lat long to use in foot legs! 🤣 -->
     <div class="leg">
       <div v-for="(leg, i) in tripPattern.legs" :key="i" class=" ">
@@ -88,16 +86,11 @@
           <div class="grid-item">{{ leg.toPlace.name }}</div> 
         </div>
       </div>
-     
       <div class="summary">
-        <!-- {{ getTime(tripPattern.startTime) }} ➡️ {{ getTime(tripPattern.endTime) }} -->
         {{ getTime(tripPattern.endTime) }}
       </div>
     </div>
-    <!-- <ul v-if="tripPattern.legs.length">
-      <li v-for="(leg, i) in tripPattern.legs" :key="i" ></li>
     
-    </ul> -->
   </div>
 </template>
 
@@ -105,10 +98,6 @@
 export default {
   props: ["tripPattern"],
   name: "TripPattern",
-
-  data() {
-    return {};
-  },
   methods: {
     getTime(iso) {
       return iso.substring(11, 19);
@@ -117,7 +106,6 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 abbr{
   text-decoration: none;

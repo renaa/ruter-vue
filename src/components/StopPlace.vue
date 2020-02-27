@@ -59,7 +59,6 @@ export default {
       input: "",
       current: null,
       stopData: null,
-      geo: "",
       markerLatLng: [59.87, 10.66],
       hidemap: true,
 
@@ -79,6 +78,7 @@ export default {
     setMarker(event) {
       this.markerLatLng = event.latlng;
       this.$emit("map-place", this.markerLatLng);
+      console.log(this.markerLatLng)
     },
     haveResults() {
       return this.stopData && this.stopData.stopPlace;
@@ -101,8 +101,10 @@ export default {
     },
     getLocation() {
       if (navigator.geolocation) {
+        this.current = null;
         navigator.geolocation.getCurrentPosition(position => {
-          this.geo = position.coords.latitude + "|" + position.coords.longitude;
+          let geo = { "lat": position.coords.latitude, "lng": position.coords.longitude }
+          this.$emit('select-place', geo);
         });
       }
     },

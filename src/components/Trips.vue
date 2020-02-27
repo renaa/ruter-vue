@@ -1,8 +1,5 @@
 <template>
   <div class="hello">
-    <!-- @mouseenter="$log" -->
-    <!-- Fra: {{ fid }} Til: {{ tid }} Kl: {{ getTime(now) }} -->
-
     <section v-if="resultData">
       <ul v-if="resultData && resultData.trip">
         <li
@@ -32,7 +29,6 @@ export default {
   data() {
     return {
       resultData: null,
-      querying: false,
       fromQuery: null,
       toQuery: null
     };
@@ -42,11 +38,9 @@ export default {
   },
   methods: {
     Search() {
-      this.querying = true;
       this.resultData = null;
       this.CreateQuery();
       this.SearchWithQuery();
-      this.querying = false;
     },
     CreateQuery(){
       console.log(typeof this.fid)

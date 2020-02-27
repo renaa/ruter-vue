@@ -34,3 +34,7 @@ new Vue({
   render: h => h(App),
   apolloProvider
 }).$mount("#app");
+
+export function getTime(iso) {
+  return iso.substring(11, 19); //HH:MM:SS
+}
