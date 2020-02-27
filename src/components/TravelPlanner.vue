@@ -44,7 +44,6 @@ export default {
       let x = new Date();
       return x.toISOString();
     },
-    Search() {}
   }
 };
 </script>
