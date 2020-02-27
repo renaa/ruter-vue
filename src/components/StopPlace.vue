@@ -1,35 +1,25 @@
 <template>
   <div class="stopPlaces">
-      test
-    <span>{{ msg }}</span>
+    <span>{{ msg }} </span>
     <input v-on:keyup="loadPlaces()" v-model="input" />
     <button @click="getLocation()">📍</button>
     <button @click="hidemap = !hidemap">toggleMap</button>
-    <!-- Leroy Yenkins -->
     <div v-if="!hidemap" style="height: 500px;">
-      <div class="info" style="height: 15%">
-        <span>Center: {{ center }}</span>
-        <span>Zoom: {{ zoom }}</span>
-        <span>Bounds: {{ bounds }}</span>
-        <div class="a">{{ markerLatLng }}</div>
-      </div>
-      <l-map style="height: 85%"
+      <l-map
         :zoom="zoom"
         :center="center"
-        @click="setMarker; $emit('map-place', markerLatLng);"
+        @click="setMarker"
         @update:zoom="zoomUpdated"
         @update:center="centerUpdated"
         @update:bounds="boundsUpdated"
       >
         <l-tile-layer :url="url"></l-tile-layer>
-        <l-marker :lat-lng="markerLatLng" :icon="icon" ></l-marker>
-
-        
+        <l-marker :lat-lng="markerLatLng" :icon="icon"></l-marker>
       </l-map>
     </div>
 
-    <section>
-      <ul id="11" v-if="stopData && stopData.stopPlace.length">
+    <section> 
+      <ul v-if="stopData && stopData.stopPlace.length">
         <li
           v-for="(place, i) in stopData.stopPlace"
           :key="place.id"
@@ -46,17 +36,15 @@
           <br />
         </li>
       </ul>
-      <div v-else>no result :(</div>
+      <div v-else>no result from stop place query</div>
     </section>
-
-    
   </div>
 </template>
 
 <script>
 import { StopPlace } from "../queries/StopPlace.gql";
-import { LMap, LTileLayer, LMarker, L } from "vue2-leaflet";
-
+import { LMap, LTileLayer } from "vue2-leaflet";
+import L from "leaflet";
 export default {
   props: ["msg", "inputQuery"],
   name: "getToAndFrom",
@@ -74,24 +62,23 @@ export default {
       geo: "",
       markerLatLng: [59.87, 10.66],
       hidemap: true,
-      url2: "http://www.newdesignfile.com/postpic/2013/01/transparent-map-marker-clip-art_281326.png",
-      icon:L.icon({
-    iconUrl: this.url2,
-    iconSize: [40, 40],
-    iconAnchor: [20, 20]
-  })
 
+      icon: L.icon({
+        iconUrl:
+          "http://www.newdesignfile.com/postpic/2013/01/transparent-map-marker-clip-art_281326.png",
+        iconSize: [18, 30],
+        iconAnchor: [9, 30]
+      })
     };
   },
   components: {
     LMap,
-    LTileLayer,
-    LMarker
+    LTileLayer
   },
   methods: {
-    
     setMarker(event) {
       this.markerLatLng = event.latlng;
+      this.$emit("map-place", this.markerLatLng);
     },
     haveResults() {
       return this.stopData && this.stopData.stopPlace;
@@ -161,7 +148,6 @@ abbr {
   text-decoration: none;
 }
 
-
 .stopPlaces {
   /* position: relative; */
   margin: 50px 0;
@@ -179,5 +165,8 @@ abbr {
 .lmap {
   height: 1000vh;
   display: block;
+}
+.stopPlaces {
+  width: 50%;
 }
 </style>
