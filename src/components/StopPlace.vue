@@ -81,6 +81,8 @@ export default {
       this.current = null;
       this.markerLatLng = event.latlng;
       this.$emit("map-place", this.markerLatLng);
+
+      console.debug(event)
     },
     getLocation() {
       if (navigator.geolocation) {
@@ -88,6 +90,10 @@ export default {
         navigator.geolocation.getCurrentPosition(position => {
           let geo = { "lat": position.coords.latitude, "lng": position.coords.longitude }
           this.$emit('select-place', geo);
+          console.log("g, m")
+          console.debug(geo)
+          console.debug(this.markerLatLng)
+          this.markerLatLng = geo
         });
       }
     },
