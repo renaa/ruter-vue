@@ -40,7 +40,6 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 TODO:
 
 UX
-* remove pointer when pressing a stopplace
 * ? showing only map or stopplaces
 * close map when selecting a place
 * removing inputString when togglingMap on, BUT this makes another query. ?

@@ -22,10 +22,7 @@
         <li
           v-for="(place, i) in stopData.stopPlace"
           :key="place.id"
-          @click="
-            $emit('select-place', place.id);
-            current = i;
-          "
+          @click="clickOnStopPlace(i,place.id)"
           class="place"
           :class="{ current: i == current }"
         >
@@ -50,7 +47,6 @@ export default {
   name: "getToAndFrom",
   data() {
     return {
-      
       input: "",
       current: null,
       stopData: null,
@@ -77,6 +73,11 @@ export default {
     LTileLayer
   },
   methods: {
+    clickOnStopPlace(i, id){
+      this.current = i;
+      this.$emit('select-place', id);
+      this.markerLatLng = [0, 0];
+    },
     setMarker(event) {
       this.current = null;
       this.markerLatLng = event.latlng;
