@@ -2,7 +2,7 @@
   <div class="StopPlaces">
     <span>{{ msg }} </span>
     <input v-on:keyup="loadPlaces()" v-model="input" />
-    <button @click="getLocation()">📍</button>
+    <button title="bruk geolokasjon" @click="getLocation()">🎯</button>
     <button @click="hidemap = !hidemap">toggleMap</button>
     <div v-if="!hidemap" style="height: 500px;">
       <l-map
