@@ -22,33 +22,39 @@
 </template>
 
 <script>
-import StopPlace from "./StopPlace";
-import Trips from "./Trips";
+import StopPlace from "./StopPlace"
+import Trips from "./Trips"
 
 export default {
   name: "getToAndFrom",
   components: {
     StopPlace,
-    Trips
+    Trips,
   },
   data() {
     return {
       fromInput: "teisen",
       toInput: "frogner",
       fromId: null,
-      toId: null
-    };
+      toId: null,
+    }
   },
   methods: {
     getNowDate() {
-      let x = new Date();
-      return x.toISOString();
+      let x = new Date()
+      return x.toISOString()
     },
-  }
-};
+  },
+}
 </script>
 
-<style scoped>
+<style lang="scss">
+body {
+  overflow: hidden;
+}
+.TravelPlanner {
+  border: 1px solid green;
+}
 ul {
   list-style-type: none;
   padding: 5px;
@@ -68,8 +74,20 @@ input {
 .label {
   width: 100%;
 }
+
 .stopPlaceContainer {
   display: flex;
   flex-direction: row;
+}
+.StopPlaces {
+  width: 50%;
+}
+@media only screen and (max-width: 900px) {
+  .stopPlaceContainer {
+    flex-direction: column;
+  }
+  .StopPlaces {
+    width: unset;
+  }
 }
 </style>

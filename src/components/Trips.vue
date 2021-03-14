@@ -1,6 +1,6 @@
 <template>
   <div class="Trips">
-    <section v-if="resultData">
+    <div v-if="resultData">
       <ul v-if="resultData && resultData.trip && resultData.trip.tripPatterns.length">
         <li
           v-for="(tripPattern, i) in resultData.trip.tripPatterns"
@@ -11,8 +11,8 @@
         </li>
       </ul>
       <div v-else>entur returned nothing</div>
-    </section>
-    <section v-else>loading...</section>
+    </div>
+    <div class="loader" v-else>loading...</div>
   </div>
 </template>
 
@@ -68,6 +68,7 @@ export default {
       }
     },
     SearchWithQuery() {
+
       this.$apollo
         .query({
           query: trip,
@@ -100,13 +101,15 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-button {
-  background-color: #42b983;
-  color: white;
-  padding: 5px;
-  border-radius: 5px;
+<style lang="scss">
+
+@import '../scss/main.scss';
+
+
+.Trips{
+  border: 1px solid pink;
 }
+
 ul {
   list-style-type: none;
   padding: 5px;
@@ -114,9 +117,15 @@ ul {
   flex-wrap: wrap;
   padding: 5px;
   margin: 5px;
+  display: flex;
+  align-items: center;
 }
 li {
   margin: 5px auto;
   display: block;
 }
+
+
+
+
 </style>

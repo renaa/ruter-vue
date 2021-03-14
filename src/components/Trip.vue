@@ -106,7 +106,10 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss">
+.TripPattern{
+  border: 1px solid blue;
+}
 abbr{
   text-decoration: none;
 }

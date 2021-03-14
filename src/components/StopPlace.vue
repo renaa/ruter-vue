@@ -1,7 +1,7 @@
 <template>
   <div class="StopPlaces">
     <span>{{ msg }} </span>
-    <input v-on:keyup="loadPlaces()" v-model="input" />
+    <input class="test" v-on:keyup="loadPlaces()" v-model="input" />
     <button title="bruk geolokasjon" @click="getLocation()">🎯</button>
     <button @click="hidemap = !hidemap">toggleMap</button>
     <div v-if="!hidemap" style="height: 500px;">
@@ -131,7 +131,10 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss">
+.StopPlaces{
+  border: 1px solid gray;
+}
 ul {
   list-style-type: none;
   padding: 5px;
@@ -169,7 +172,5 @@ abbr {
   height: 1000vh;
   display: block;
 }
-.StopPlaces {
-  width: 50%;
-}
+
 </style>
