@@ -48,37 +48,23 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "../scss/main.scss";
-body {
-  overflow: hidden;
-}
+
 .TravelPlanner {
   border: 1px solid green;
-}
-ul {
-  list-style-type: none;
-  padding: 5px;
-  display: flex;
-  flex-wrap: wrap;
-  padding: 5px;
-  margin: 5px;
-}
-li {
-  margin: 5px auto;
-  display: block;
-}
-input {
-  padding: 5px;
-  margin: 5px 0;
 }
 .label {
   width: 100%;
 }
-
 .stopPlaceContainer {
+  background-color: green;
+  border: 10px solid pink;
+
+  //todo not enforced styles ;( ;( ;(
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  margin-left: 4px;;
   @media screen and (min-width: $breakpoint) {
     flex-direction: row;
   }

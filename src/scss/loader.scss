@@ -1,4 +1,6 @@
-
+body {
+  overflow: hidden; // ☹
+}
 
 $color1: #42B983;
 $color2: #35495E;
@@ -9,6 +11,7 @@ $color2: #35495E;
   height: 10em;
 }
 .loader {
+  content: '';
   margin: 60px auto;
   font-size: 10px;
   position: relative;

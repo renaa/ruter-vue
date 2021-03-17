@@ -14,6 +14,7 @@ export default {
   },
   computed: {
     legInfo: function(){
+
       if (this.leg.line?.publicCode)
       {
         return this.leg.line.publicCode
