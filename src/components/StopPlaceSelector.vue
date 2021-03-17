@@ -1,0 +1,183 @@
+<template>
+  <div class="stopPlaceSelector">
+    <div class="input">
+      <span>{{ msg }} </span>
+      <input class="test" v-on:keyup="loadPlaces()" v-model="input" />
+      <button title="bruk geolokasjon" @click="getLocation()">🎯</button>
+      <button @click="hidemap = !hidemap">toggleMap</button>
+    </div>
+
+    <div class="suggestions">
+      <ul v-if="stopData && stopData.stopPlace.length">
+        <li
+          v-for="(place, i) in stopData.stopPlace"
+          :key="place.id"
+          @click="clickOnStopPlace(i, place.id)"
+          class="place"
+          :class="{ current: i == current }"
+        >
+          <abbr :title="place.topographicPlace.name.value">{{ place.name.value }}</abbr>
+          <br />
+        </li>
+      </ul>
+      <div v-else>no result from stop place query</div>
+    </div>
+
+    <div class="map">
+      <div v-if="!hidemap" style="height: 500px;">
+        <l-map
+          :zoom="zoom"
+          :center="center"
+          @click="setMarker"
+          @update:zoom="zoomUpdated"
+          @update:center="centerUpdated"
+          @update:bounds="boundsUpdated"
+        >
+          <l-tile-layer :url="url"></l-tile-layer>
+          <l-marker :lat-lng="markerLatLng" :icon="icon"></l-marker>
+        </l-map>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { StopPlace } from "../queries/StopPlace.gql"
+import { LMap, LTileLayer } from "vue2-leaflet"
+import L from "leaflet"
+
+export default {
+  props: ["msg", "inputQuery"],
+  name: "getToAndFrom",
+  data() {
+    return {
+      input: "",
+      current: null,
+      stopData: null,
+
+      //leaf
+      hidemap: true,
+      url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+      zoom: 10,
+      bounds: null,
+      center: [59.87, 10.66],
+
+      // leaf marker
+      markerLatLng: [59.87, 10.66],
+      icon: L.icon({
+        iconUrl:
+          "http://www.newdesignfile.com/postpic/2013/01/transparent-map-marker-clip-art_281326.png",
+        iconSize: [18, 30],
+        iconAnchor: [9, 30],
+      }),
+    }
+  },
+  components: {
+    LMap,
+    LTileLayer,
+  },
+  methods: {
+    clickOnStopPlace(i, id) {
+      this.current = i
+      this.$emit("select-place", id)
+      this.markerLatLng = [0, 0]
+    },
+    setMarker(event) {
+      this.current = null
+      this.markerLatLng = event.latlng
+      this.$emit("map-place", this.markerLatLng)
+
+      console.debug(event)
+    },
+    getLocation() {
+      if (navigator.geolocation) {
+        this.current = null
+        navigator.geolocation.getCurrentPosition(position => {
+          let geo = { lat: position.coords.latitude, lng: position.coords.longitude }
+          this.$emit("select-place", geo)
+          console.log("g, m")
+          console.debug(geo)
+          console.debug(this.markerLatLng)
+          this.markerLatLng = geo
+        })
+      }
+    },
+    loadPlaces() {
+      this.current = null
+      this.loadStopPlaces()
+    },
+    loadStopPlaces() {
+      this.$apollo
+        .query({
+          query: StopPlace,
+          variables: {
+            query: this.input,
+          },
+        })
+        .then(response => {
+          this.stopData = response.data
+        })
+    },
+    zoomUpdated(zoom) {
+      this.zoom = zoom
+    },
+    centerUpdated(center) {
+      this.center = center
+    },
+    boundsUpdated(bounds) {
+      this.bounds = bounds
+    },
+  },
+  created() {
+    this.input = this.inputQuery
+    this.loadPlaces()
+  },
+}
+</script>
+
+<style lang="scss">
+@import "../scss/main.scss";
+.stopPlaceSelector {
+  border: 1px solid gray;
+}
+input {
+  padding: 5px;
+  margin: 5px 0;
+}
+abbr {
+  text-decoration: none;
+}
+.stopPlaceSelector {
+  margin: 50px 0;
+  @media (min-width: $breakpoint) {
+    width: 50%;
+  }
+}
+.place {
+  background-color: #42b983;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+}
+.current {
+  background-color: #35495e;
+}
+.lmap {
+  height: 1000vh;
+  display: block;
+}
+.suggestions {
+  ul {
+    list-style-type: none;
+    padding: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 5px;
+    margin: 5px;
+  }
+  li {
+    margin: 5px auto;
+    display: block;
+  }
+}
+</style>

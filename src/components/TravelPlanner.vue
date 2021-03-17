@@ -2,13 +2,13 @@
   <div class="TravelPlanner">
     <div class="label">Reiseplanlegger</div>
     <div class="stopPlaceContainer">
-      <stop-place
+      <stop-place-selector
         msg="Fra"
         :inputQuery="fromInput"
         v-on:select-place="fromId = $event"
         v-on:map-place="fromId = $event"
       />
-      <stop-place
+      <stop-place-selector
         msg="Til"
         :inputQuery="toInput"
         v-on:select-place="toId = $event"
@@ -22,13 +22,13 @@
 </template>
 
 <script>
-import StopPlace from "./StopPlace"
+import StopPlaceSelector from "./StopPlaceSelector"
 import Trips from "./Trips"
 
 export default {
   name: "getToAndFrom",
   components: {
-    StopPlace,
+    StopPlaceSelector,
     Trips,
   },
   data() {
@@ -49,6 +49,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import "../scss/main.scss";
 body {
   overflow: hidden;
 }
@@ -77,17 +78,9 @@ input {
 
 .stopPlaceContainer {
   display: flex;
-  flex-direction: row;
-}
-.StopPlaces {
-  width: 50%;
-}
-@media only screen and (max-width: 900px) {
-  .stopPlaceContainer {
-    flex-direction: column;
-  }
-  .StopPlaces {
-    width: unset;
+  flex-direction: column;
+  @media screen and (min-width: $breakpoint) {
+    flex-direction: row;
   }
 }
 </style>

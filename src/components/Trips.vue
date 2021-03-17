@@ -1,7 +1,7 @@
 <template>
   <div class="Trips">
     <div v-if="resultData">
-      <ul v-if="resultData && resultData.trip && resultData.trip.tripPatterns.length">
+      <ul class="trips-list" v-if="resultData && resultData.trip && resultData.trip.tripPatterns.length">
         <li
           v-for="(tripPattern, i) in resultData.trip.tripPatterns"
           class="trip"
@@ -101,7 +101,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="scss">
+<style lang="scss" scoped>
 
 @import '../scss/main.scss';
 
@@ -110,11 +110,14 @@ export default {
   border: 1px solid pink;
 }
 
+.trips-list{
+  flex-direction: column;
+  background: red;
+}
 ul {
   list-style-type: none;
   padding: 5px;
   display: flex;
-  flex-wrap: wrap;
   padding: 5px;
   margin: 5px;
   display: flex;
