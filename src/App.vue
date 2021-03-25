@@ -28,7 +28,7 @@ export default {
 }
 
 body {
-   overflow: hidden; /* ☹  */
+   overflow: hidden;
  }
  
 </style>

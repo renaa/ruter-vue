@@ -28,8 +28,7 @@ export default {
       // leaf marker
       markerLatLng: [59.87, 10.66],
       icon: L.icon({
-        iconUrl:
-          "http://www.newdesignfile.com/postpic/2013/01/transparent-map-marker-clip-art_281326.png",
+         iconUrl: require("../assets/map-marker.png"),
         iconSize: [18, 30],
         iconAnchor: [9, 30],
       }),
@@ -40,6 +39,7 @@ export default {
     LTileLayer,
   },
   methods: {
+
     setInputFocus(event) {
       if (event.composedPath()[0].localName !== "button") {
         this.$refs.input.focus();
@@ -123,7 +123,10 @@ export default {
 </script>
 
 <template>
+
   <div class="stopPlaceSelector">
+
+
     <div class="input-with-dropdown" @mouseup="setInputFocus">
       <div class="input-box" :class="{ 'input-area-focused': inputFocused }">
         <label>{{ msg }} </label>
