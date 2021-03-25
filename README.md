@@ -1,9 +1,10 @@
-# entur vue
+### Demo: https://renaa.github.io/ruter-vue/
+
 An app I made with Entur's GraphQL API and Vue
 
- 🦧 https://developer.entur.org/
+### 🦧 https://developer.entur.org/
  
- 🗺️ https://vue2-leaflet.netlify.com/ 
+### 🗺️ https://vue2-leaflet.netlify.com/ 
 
 ### 🤔 TODO
 
