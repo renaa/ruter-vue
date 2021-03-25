@@ -43,7 +43,6 @@ export default {
       this.SearchWithQuery();
     },
     CreateQuery(){
-      console.log(typeof this.fid)
       if (typeof this.fid == "string"){
         this.fromQuery = { place: this.fid }
       }
