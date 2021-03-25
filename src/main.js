@@ -1,10 +1,6 @@
 import Vue from "vue";
 import App from "./App.vue";
 
-// import VueRouter from "vue-router";
-// Vue.use(VueRouter);
-//Vue.prototype.$log = console.log.bind(console)
-
 // vue-apollo //
 import ApolloClient from "apollo-boost";
 import VueApollo from "vue-apollo";
@@ -35,6 +31,3 @@ new Vue({
   apolloProvider
 }).$mount("#app");
 
-export function getTime(iso) {
-  return iso.substring(11, 19); //HH:MM:SS
-}

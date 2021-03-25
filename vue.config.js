@@ -14,6 +14,9 @@ module.exports = {
       headers: { "Access-Control-Allow-Origin": "*" }
     }
   },
+  publicPath: process.env.NODE_ENV === 'production'
+    ? '/ruter-vue/'
+    : '/'
   
 
   
