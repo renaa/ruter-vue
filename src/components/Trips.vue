@@ -106,7 +106,7 @@ export default {
 @import '../scss/main.scss';
 
 .Trips{
-  margin-top: 100px;;
+  margin-top: 50px;
 }
 
 .trips-list{

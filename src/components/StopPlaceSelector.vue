@@ -13,6 +13,7 @@ export default {
   data() {
     return {
       input: "",
+      inputInvalidSearchTerm: false,
       inputFocused: false,
       current: null,
       stopData: null,
@@ -42,22 +43,24 @@ export default {
     setInputFocus(event) {
       if (event.composedPath()[0].localName !== "button") {
         this.$refs.input.focus();
-        // this.$nextTick(()=> {this.$refs.input.focus()})
+        if (this.inputInvalidSearchTerm) {
+          this.input = "";
+          this.inputInvalidSearchTerm = false;
+        }
       }
     },
     clickOnStopPlace(i, id, place) {
-      console.log(place);
       this.current = i;
       this.$emit("select-place", id);
       this.markerLatLng = [0, 0];
-      this.input = place.name.value;
+      this.updateInputField(place.name.value, false);
     },
     inputBlurHandler() {
       setTimeout(() => {
         this.inputFocused = false;
       }, 200);
     },
-    getLocation() {
+    getGeoLocation() {
       if (navigator.geolocation) {
         this.current = null;
         navigator.geolocation.getCurrentPosition((position) => {
@@ -67,8 +70,14 @@ export default {
           };
           this.$emit("select-place", geo);
           this.markerLatLng = geo;
+          this.updateInputField(this.prettyPrintGeo(geo.lat, geo.lng), true);
         });
       }
+    },
+
+    updateInputField(input, inputInvalidSearchTerm) {
+      this.input = input;
+      this.inputInvalidSearchTerm = inputInvalidSearchTerm;
     },
 
     // query
@@ -103,6 +112,11 @@ export default {
       this.current = null;
       this.markerLatLng = event.latlng;
       this.$emit("map-place", this.markerLatLng);
+      this.updateInputField(this.prettyPrintGeo(event.latlng.lat, event.latlng.lng), true)
+    },
+
+    prettyPrintGeo(lat, lng) {
+      return `lat:${lat.toFixed(3)} lng:${lng.toFixed(3)}`;
     },
   },
 };
@@ -114,13 +128,14 @@ export default {
       <div class="input-box" :class="{ 'input-area-focused': inputFocused }">
         <label>{{ msg }} </label>
         <input
+          :class="{ 'input-invalid-search-term': inputInvalidSearchTerm }"
           ref="input"
           v-on:keyup="loadPlaces()"
           v-model="input"
           @focus="inputFocused = true"
           @blur="inputBlurHandler()"
         />
-        <button title="bruk geolokasjon" @click="getLocation()">🎯</button>
+        <button title="bruk geolokasjon" @click="getGeoLocation()">🎯</button>
         <button @click="hidemap = !hidemap">🌍</button>
       </div>
       <div class="suggestions" :class="{ 'suggestions-focused': inputFocused }">
@@ -192,6 +207,9 @@ $border-color: #c8c8c8;
       outline: none;
       background: transparent;
     }
+    .input-invalid-search-term {
+      color: #aa6868;
+    }
     button {
       font-size: 2em;
       padding: 5px;
@@ -231,7 +249,7 @@ $border-color: #c8c8c8;
     p {
       margin: 0;
     }
-    .topologicalPlace{
+    .topologicalPlace {
       font-size: 0.85rem;
       color: #767676;
     }
@@ -248,6 +266,5 @@ $border-color: #c8c8c8;
 .lmap {
   height: 1000vh;
   display: block;
-
 }
 </style>
