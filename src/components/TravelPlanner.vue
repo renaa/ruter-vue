@@ -21,6 +21,7 @@
   </div>
 </template>
 
+
 <script>
 import StopPlaceSelector from "./StopPlaceSelector"
 import Trips from "./Trips"
