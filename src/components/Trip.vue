@@ -35,10 +35,8 @@ export default {
   </div>
 </template>
 
-<style lang="scss">
-.TripPattern {
-  border: 1px solid blue;
-}
+<style lang="scss" scoped>
+
 abbr {
   text-decoration: none;
 }

@@ -49,25 +49,32 @@ export default {
 </script>
 
 
+
 <style lang="scss" scoped>
 @import "../scss/main.scss";
 
-.TravelPlanner {
-  border: 1px solid green;
+.label {
+  font-size: 2rem;
+  margin-bottom: 1em;;
 }
 .label {
   width: 100%;
 }
 .stopPlaceContainer {
-  background-color: green;
-  border: 10px solid pink;
 
   //todo not enforced styles ;( ;( ;(
   display: flex;
-  flex-direction: row;
-  margin-left: 4px;;
+  flex-direction: column;
+
   @media screen and (min-width: $breakpoint) {
     flex-direction: row;
+  .stopPlaceSelector:nth-child(1){
+    margin-right: 10px;
   }
+  }
+  .stopPlaceSelector:nth-child(1){
+    margin-bottom: 10px;
+  }
+
 }
 </style>

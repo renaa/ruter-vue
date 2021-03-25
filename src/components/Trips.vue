@@ -105,19 +105,18 @@ export default {
 
 @import '../scss/main.scss';
 
-
 .Trips{
-  border: 1px solid pink;
+  margin-top: 100px;;
 }
 
 .trips-list{
-  flex-direction: column;
-  background: red;
+  flex-direction: row;
 }
 ul {
   list-style-type: none;
   padding: 5px;
   display: flex;
+  flex-wrap: wrap;
   padding: 5px;
   margin: 5px;
   display: flex;

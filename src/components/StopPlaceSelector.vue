@@ -1,14 +1,14 @@
 <script>
-import { StopPlace } from "../queries/StopPlace.gql"
-import { LMap, LTileLayer } from "vue2-leaflet"
-import L from "leaflet"
+import { StopPlace } from "../queries/StopPlace.gql";
+import { LMap, LTileLayer } from "vue2-leaflet";
+import L from "leaflet";
 
 export default {
   props: ["msg", "inputQuery"],
   name: "getToAndFrom",
   created() {
-    this.input = this.inputQuery
-    this.loadPlaces()
+    this.input = this.inputQuery;
+    this.loadPlaces();
   },
   data() {
     return {
@@ -32,7 +32,7 @@ export default {
         iconSize: [18, 30],
         iconAnchor: [9, 30],
       }),
-    }
+    };
   },
   components: {
     LMap,
@@ -40,31 +40,41 @@ export default {
   },
   methods: {
     setInputFocus(event) {
-      console.log(event.composedPath())
       if (event.composedPath()[0].localName !== "button") {
-        this.$refs.input.focus()
+        this.$refs.input.focus();
+        // this.$nextTick(()=> {this.$refs.input.focus()})
       }
     },
-    clickOnStopPlace(i, id) {
-      this.current = i
-      this.$emit("select-place", id)
-      this.markerLatLng = [0, 0]
+    clickOnStopPlace(i, id, place) {
+      console.log(place);
+      this.current = i;
+      this.$emit("select-place", id);
+      this.markerLatLng = [0, 0];
+      this.input = place.name.value;
+    },
+    inputBlurHandler() {
+      setTimeout(() => {
+        this.inputFocused = false;
+      }, 200);
     },
     getLocation() {
       if (navigator.geolocation) {
-        this.current = null
-        navigator.geolocation.getCurrentPosition(position => {
-          let geo = { lat: position.coords.latitude, lng: position.coords.longitude }
-          this.$emit("select-place", geo)
-          this.markerLatLng = geo
-        })
+        this.current = null;
+        navigator.geolocation.getCurrentPosition((position) => {
+          let geo = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          };
+          this.$emit("select-place", geo);
+          this.markerLatLng = geo;
+        });
       }
     },
 
     // query
     loadPlaces() {
-      this.current = null
-      this.loadStopPlaces()
+      this.current = null;
+      this.loadStopPlaces();
     },
     loadStopPlaces() {
       this.$apollo
@@ -74,132 +84,170 @@ export default {
             query: this.input,
           },
         })
-        .then(response => {
-          this.stopData = response.data
-        })
+        .then((response) => {
+          this.stopData = response.data;
+        });
     },
 
     // map
     zoomUpdated(zoom) {
-      this.zoom = zoom
+      this.zoom = zoom;
     },
     centerUpdated(center) {
-      this.center = center
+      this.center = center;
     },
     boundsUpdated(bounds) {
-      this.bounds = bounds
+      this.bounds = bounds;
     },
     setMarker(event) {
-      this.current = null
-      this.markerLatLng = event.latlng
-      this.$emit("map-place", this.markerLatLng)
+      this.current = null;
+      this.markerLatLng = event.latlng;
+      this.$emit("map-place", this.markerLatLng);
     },
   },
-}
+};
 </script>
 
 <template>
   <div class="stopPlaceSelector">
-    <div class="input-area" @click="setInputFocus" :class="{ 'input-area-focused': inputFocused }">
-      <div class="input-box">
+    <div class="input-with-dropdown" @mouseup="setInputFocus">
+      <div class="input-box" :class="{ 'input-area-focused': inputFocused }">
         <label>{{ msg }} </label>
         <input
           ref="input"
           v-on:keyup="loadPlaces()"
           v-model="input"
           @focus="inputFocused = true"
-          @blur="inputFocused = false"
+          @blur="inputBlurHandler()"
         />
         <button title="bruk geolokasjon" @click="getLocation()">🎯</button>
-        <button @click="hidemap = !hidemap">select on map</button>
+        <button @click="hidemap = !hidemap">🌍</button>
       </div>
       <div class="suggestions" :class="{ 'suggestions-focused': inputFocused }">
         <ul v-if="stopData && stopData.stopPlace.length">
           <li
             v-for="(place, i) in stopData.stopPlace"
+            @click="clickOnStopPlace(i, place.id, place)"
             :key="place.id"
-            @click="clickOnStopPlace(i, place.id)"
-            class="place"
             :class="{ current: i == current }"
+            class="place"
           >
-            <abbr :title="place.topographicPlace.name.value">{{ place.name.value }}</abbr>
-            <br />
+            <p class="placeName">{{ place.name.value }}</p>
+            <p class="topologicalPlace">
+              {{ place.topographicPlace.name.value }}
+            </p>
           </li>
         </ul>
         <div v-else>no result from stop place query</div>
       </div>
     </div>
 
-    <div class="map">
-      <div v-if="!hidemap" style="height: 500px;">
-        <l-map
-          :zoom="zoom"
-          :center="center"
-          @click="setMarker"
-          @update:zoom="zoomUpdated"
-          @update:center="centerUpdated"
-          @update:bounds="boundsUpdated"
-        >
-          <l-tile-layer :url="url"></l-tile-layer>
-          <l-marker :lat-lng="markerLatLng" :icon="icon"></l-marker>
-        </l-map>
-      </div>
+    <div v-if="!hidemap" class="map" style="height: 500px">
+      <l-map
+        :zoom="zoom"
+        :center="center"
+        @click="setMarker"
+        @update:zoom="zoomUpdated"
+        @update:center="centerUpdated"
+        @update:bounds="boundsUpdated"
+      >
+        <l-tile-layer :url="url"></l-tile-layer>
+        <l-marker :lat-lng="markerLatLng" :icon="icon"></l-marker>
+      </l-map>
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
 @import "../scss/main.scss";
-
+$border-color: #c8c8c8;
 .stopPlaceSelector {
-  border: 1px solid gray;
-  margin: 50px 0;
-  @media (min-width: $breakpoint) {
-    width: 50%;
-  }
-}
-
-.input-area {
-  border: 1px solid rgb(180, 180, 180);
-  &.input-area-focused {
-    border-color: #3d9159;
-  }
-  input {
-    border: none;
-    outline: none;
-    background: transparent;
-    color: unset;
-  }
-  position: relative;
-}
-
-.suggestions {
-  position: absolute;
-  left: 0;
   width: 100%;
-  display: none;
-  &.suggestions-focused {
-    display: unset;
-  }
-  ul {
-    display: flex;
-    flex-direction: column;
-  }
-  li, .place {
-    list-style: none;
-    text-align: start;
-    left:100px;
-    padding: 5px;
-    width: 100%;
-    border-radius: 5px;
-  }
-  .current {
-    background-color: #35495e;
-  }
 }
 
+.input-with-dropdown {
+  .input-box {
+    border: 1px solid $border-color;
+
+    box-sizing: border-box;
+    cursor: text;
+    &.input-area-focused {
+      box-shadow: inset 0 0 0 2px #59c5fc;
+      border-color: $border-color;
+    }
+    // box-shadow: inset 0 0 0 1px gray;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+
+    label {
+      align-self: center;
+      font-weight: 200;
+    }
+    input {
+      font-size: 18px;
+      flex-grow: 1;
+      margin-left: 50px;
+      border: none;
+      outline: none;
+      background: transparent;
+    }
+    button {
+      font-size: 2em;
+      padding: 5px;
+      margin: 5px;
+    }
+  }
+
+  .suggestions {
+    box-sizing: border-box;
+
+    width: 100%;
+    display: none;
+    z-index: 99;
+    &.suggestions-focused {
+      display: block;
+    }
+    ul {
+      border-bottom: 1px solid $border-color;
+      display: flex;
+      flex-direction: column;
+      padding: 10px 0 0;
+      margin: 0;
+    }
+    li,
+    .place {
+      box-sizing: border-box;
+      list-style: none;
+      text-align: start;
+      margin: 0;
+      width: 100%;
+      background: white;
+      padding: 5px 5px 3px;
+      border-top: 1px solid $border-color;
+      border-left: 1px solid $border-color;
+      border-right: 1px solid $border-color;
+    }
+    p {
+      margin: 0;
+    }
+    .topologicalPlace{
+      font-size: 0.85rem;
+      color: #767676;
+    }
+    .current {
+      box-shadow: inset 0 0 0 2px #59c5fc;
+    }
+  }
+}
+.map {
+  border: 1px solid $border-color;
+  margin-top: 10px;
+  box-shadow: inset 0 0 0 2px #59c5fc;
+}
 .lmap {
   height: 1000vh;
   display: block;
+
 }
 </style>
